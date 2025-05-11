@@ -6,7 +6,7 @@ const { generateCsrfToken } = require('../utils/csrfUtils');
 const login = (req, res) => {
   const { username, password } = req.body;
 
-  if (username === 'xyj' && password === '666666') {
+  if (username === 'elm' && password === '20010717') {
     const user = { username };
     const token = jwt.sign(user, SECRET_KEY, { expiresIn: '2d' });
 
@@ -23,7 +23,7 @@ const login = (req, res) => {
     res.cookie('csrfToken', csrfToken, {
       httpOnly: true,
       secure: true,
-      sameSite: 'None',
+      sameSite: 'Strict',
 	  maxAge: 2 * 24 * 60 * 60 * 1000,  // 与JWT token生命周期一致。
     });
 
