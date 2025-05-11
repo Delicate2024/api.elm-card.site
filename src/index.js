@@ -1,20 +1,16 @@
+// src/index.js
 const express = require('express');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const routes = require('./routes');
-
+const authRoutes = require('./routes/authRoutes');
+const { PORT } = require('./config/config');
 const app = express();
 
-app.use(cors({
-  origin: 'https://admin.elm-card.site',
-  credentials: true
-}));
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
 
-app.use('/api', routes);
+// 路由
+app.use('/api', authRoutes);
 
-const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
