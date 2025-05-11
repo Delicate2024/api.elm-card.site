@@ -8,7 +8,7 @@ const login = (req, res) => {
 
   if (username === 'xyj' && password === '666666') {
     const user = { username };
-    const token = jwt.sign(user, SECRET_KEY, { expiresIn: '2h' });
+    const token = jwt.sign(user, SECRET_KEY, { expiresIn: '2d' });
 
     // 生成 CSRF Token
     const csrfToken = generateCsrfToken();
@@ -18,11 +18,13 @@ const login = (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
+	  maxAge: 2 * 24 * 60 * 60 * 1000, // 2天
     });
     res.cookie('csrfToken', csrfToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'None',
+	  maxAge: 2 * 24 * 60 * 60 * 1000,  // 与JWT token生命周期一致。
     });
 
     return res.json({ success: true, message: '登录成功', csrfToken }); // 返回 CSRF Token
