@@ -6,7 +6,7 @@ const { generateCsrfToken } = require('../utils/csrfUtils');
 const login = (req, res) => {
   const { username, password } = req.body;
 
-  if (username === 'admin' && password === '123456') {
+  if (username === 'xyj' && password === '666666') {
     const user = { username };
     const token = jwt.sign(user, SECRET_KEY, { expiresIn: '2h' });
 
@@ -28,7 +28,8 @@ const login = (req, res) => {
     return res.json({ success: true, message: '登录成功', csrfToken }); // 返回 CSRF Token
   }
 
-  res.status(401).json({ success: false, message: '用户名或密码错误' });
+  // 确保返回正确的 401 错误，并且错误信息格式正确
+  return res.status(401).json({success: false, message: '用户名或密码错误' });
 };
 
 module.exports = {
