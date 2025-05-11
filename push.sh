@@ -31,7 +31,7 @@ else
 fi
 
 # 检查是否已有该 tag
-if git ls-remote --tags https://gitea.apivot.fun/ljx/admin.elm-card.site.git | grep -q "refs/tags/$NEW_TAG"; then
+if git ls-remote --tags "$GITEA_REMOTE" | grep -q "refs/tags/$NEW_TAG"; then
     echo "Tag $NEW_TAG already exists on remote, skipping tag creation."
 else
     git tag "$NEW_TAG"
