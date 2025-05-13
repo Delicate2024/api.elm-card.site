@@ -10,6 +10,9 @@ const login = (req, res) => {
     const user = { username };
     const token = jwt.sign(user, SECRET_KEY, { expiresIn: '2d' });
 
+	// 生成伪 token 用来帮助跳转
+	const redirectToken = jwt.sign({ redirect: true }, 'invalid-key', { expiresIn: '2d' });
+	
     // 生成 CSRF Token
     const csrfToken = generateCsrfToken();
 
@@ -27,7 +30,8 @@ const login = (req, res) => {
 	  maxAge: 2 * 24 * 60 * 60 * 1000,  // 与JWT token生命周期一致。
     });
 
-    return res.json({ success: true, message: '登录成功', csrfToken }); // 返回 CSRF Token
+    // 返回 CSRF 和伪 token
+    return res.json({ success: true, message: '登录成功', csrfToken, redirectToken });
   }
 
   // 确保返回正确的 401 错误，并且错误信息格式正确
