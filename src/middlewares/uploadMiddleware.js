@@ -6,6 +6,7 @@ const os = require('os');
 
 const baseUploadDir = path.join(os.homedir(), 'elm-card', 'assets');
 
+// 校验字段名是否合法，防止目录穿越等攻击
 function isSafeFieldName(fieldName) {
   if (!fieldName || typeof fieldName !== 'string') return false;
   if (fieldName.includes('..')) return false;
@@ -14,11 +15,9 @@ function isSafeFieldName(fieldName) {
   return true;
 }
 
-function sanitizeFilename(filename) {
-  return filename
-    .normalize('NFKD') // 处理中文字符为 Unicode 安全格式
-    .replace(/[^\w.\-()\u4e00-\u9fa5]/g, '_') // 替换非法字符
-    .slice(0, 255); // 限制文件名长度（文件系统限制）
+// 强制将 originalname 从 latin1 解码为 utf8，解决中文乱码问题
+function decodeFilename(name) {
+  return Buffer.from(name, 'latin1').toString('utf8');
 }
 
 const storage = multer.diskStorage({
@@ -34,7 +33,7 @@ const storage = multer.diskStorage({
     cb(null, targetDir);
   },
   filename: function (req, file, cb) {
-    const safeName = sanitizeFilename(file.originalname);
+    const safeName = decodeFilename(file.originalname);
     cb(null, safeName);
   },
 });
@@ -57,11 +56,7 @@ const uploadCheck = (req, res, next) => {
   upload(req, res, (err) => {
     if (err) {
       const failedField = err.field || 'unknown';
-      return res.status(400).json({
-        success: false,
-        message: err.message,
-        field: failedField,
-      });
+      return res.status(400).json({ success: false, message: err.message, field: failedField });
     }
     next();
   });
