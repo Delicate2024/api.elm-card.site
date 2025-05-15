@@ -15,7 +15,7 @@ const validateDeleteParams = (req, res, next) => {
     });
   }
 
-  const targetPath = path.join(baseUploadDir, type, name);
+const targetPath = path.resolve(baseUploadDir, type, name);
 
   if (!targetPath.startsWith(baseUploadDir)) {
     return res.status(400).json({
@@ -35,4 +35,6 @@ const validateDeleteParams = (req, res, next) => {
   next();
 };
 
-module.exports = validateDeleteParams;
+module.exports = {
+  validateDeleteParams,
+};

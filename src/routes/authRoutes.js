@@ -6,6 +6,7 @@ const { verifyCsrfToken } = require('../utils/csrfUtils');
 
 const { verifyToken } = require('../middlewares/verifyTokenMiddleware');
 const { uploadCheck } = require('../middlewares/uploadMiddleware');
+const { validateDeleteParams } = require('../middlewares/validateDeleteParams');
 
 const { login } = require('../controllers/loginController');
 const { upload } = require('../controllers/uploadController');
@@ -35,6 +36,7 @@ router.post('/getAssetFileList',
 // 删除资产
 router.post('/deleteAsset', 
   verifyCsrfToken,
+  validateDeleteParams,
   deleteAssetFile
 );
 
