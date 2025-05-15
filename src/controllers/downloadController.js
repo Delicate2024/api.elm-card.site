@@ -18,7 +18,7 @@ const getAssetFileList = (req, res) => {
           .filter(name => fs.statSync(path.join(subDir, name)).isFile())
           .map(name => ({
             name,
-            type: dirent.name, // ✅ 添加类型字段
+            type: dirent.name, 
           }));
 
         result[dirent.name] = files;

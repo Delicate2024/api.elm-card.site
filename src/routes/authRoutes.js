@@ -10,6 +10,7 @@ const { uploadCheck } = require('../middlewares/uploadMiddleware');
 const { login } = require('../controllers/loginController');
 const { upload } = require('../controllers/uploadController');
 const { getAssetFileList } = require('../controllers/downloadController.js');
+const { deleteAssetFile } = require('../controllers/updateController');
 
 router.post('/login', login);
 
@@ -29,6 +30,12 @@ router.post('/uploadAssets',
 router.post('/getAssetFileList',
   verifyCsrfToken,
   getAssetFileList
+);
+
+// 删除资产
+router.post('/deleteAsset', 
+  verifyCsrfToken,
+  deleteAssetFile
 );
 
 // 需要 JWT Token 和 CSRF Token 验证的受保护路由
