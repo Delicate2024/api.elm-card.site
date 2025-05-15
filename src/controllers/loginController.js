@@ -1,4 +1,4 @@
-// src/controllers/authController.js
+// src/controllers/loginController.js
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = require('../config/config');
 const { generateCsrfToken } = require('../utils/csrfUtils');

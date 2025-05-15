@@ -1,9 +1,14 @@
 // src/routes/authRoutes.js
 const express = require('express');
 const router = express.Router();
-const { login } = require('../controllers/authController');
+
 const { verifyCsrfToken } = require('../utils/csrfUtils');
-const { verifyToken } = require('../middlewares/authMiddleware');
+
+const { verifyToken } = require('../middlewares/verifyTokenMiddleware');
+const { uploadCheck } = require('../middlewares/uploadMiddleware');
+
+const { login } = require('../controllers/loginController');
+const { upload } = require('../controllers/uploadController');
 
 router.post('/login', login);
 
@@ -16,5 +21,12 @@ router.get('/verifyToken', verifyToken, (req, res) => {
 router.post('/some-protected-route', verifyToken, verifyCsrfToken, (req, res) => {
   res.json({ success: true, message: '受保护的路由' });
 });
+
+router.post('/uploadAssets',
+  verifyToken,
+  verifyCsrfToken,
+  uploadCheck,
+  upload
+);
 
 module.exports = router;

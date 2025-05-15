@@ -1,4 +1,4 @@
-// src/middlewares/authMiddleware.js
+// src/middlewares/verifyTokenMiddleware.js
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = require('../config/config');
 
