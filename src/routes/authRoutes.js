@@ -34,7 +34,7 @@ router.post('/getAssetFileList',
 );
 
 // 删除资产
-router.post('/deleteAsset', 
+router.post('/deleteAssetFile', 
   verifyCsrfToken,
   validateDeleteParams,
   deleteAssetFile
