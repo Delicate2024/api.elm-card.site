@@ -9,6 +9,7 @@ const { uploadCheck } = require('../middlewares/uploadMiddleware');
 
 const { login } = require('../controllers/loginController');
 const { upload } = require('../controllers/uploadController');
+const { getAssetFileList } = require('../controllers/downloadController.js');
 
 router.post('/login', login);
 
@@ -27,6 +28,12 @@ router.post('/uploadAssets',
   verifyCsrfToken,
   uploadCheck,
   upload
+);
+
+router.post('/getAssetFileList',
+  verifyToken,
+  verifyCsrfToken,
+  getAssetFileList
 );
 
 module.exports = router;
