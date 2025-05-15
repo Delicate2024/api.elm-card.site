@@ -16,7 +16,10 @@ const getAssetFileList = (req, res) => {
         const subDir = path.join(baseUploadDir, dirent.name);
         const files = fs.readdirSync(subDir)
           .filter(name => fs.statSync(path.join(subDir, name)).isFile())
-          .map(name => ({ name })); // ✅ 包装成 { name: '...' }
+          .map(name => ({
+            name,
+            type: dirent.name, // ✅ 添加类型字段
+          }));
 
         result[dirent.name] = files;
       }
@@ -38,4 +41,3 @@ const getAssetFileList = (req, res) => {
 };
 
 module.exports = { getAssetFileList };
-
