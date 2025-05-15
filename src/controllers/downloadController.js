@@ -15,7 +15,9 @@ const getAssetFileList = (req, res) => {
       if (dirent.isDirectory()) {
         const subDir = path.join(baseUploadDir, dirent.name);
         const files = fs.readdirSync(subDir)
-          .filter(name => fs.statSync(path.join(subDir, name)).isFile());
+          .filter(name => fs.statSync(path.join(subDir, name)).isFile())
+          .map(name => ({ name })); // ✅ 包装成 { name: '...' }
+
         result[dirent.name] = files;
       }
     }
@@ -36,3 +38,4 @@ const getAssetFileList = (req, res) => {
 };
 
 module.exports = { getAssetFileList };
+
