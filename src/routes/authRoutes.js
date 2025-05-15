@@ -24,14 +24,12 @@ router.post('/some-protected-route', verifyToken, verifyCsrfToken, (req, res) =>
 });
 
 router.post('/uploadAssets',
-  verifyToken,
   verifyCsrfToken,
   uploadCheck,
   upload
 );
 
 router.post('/getAssetFileList',
-  verifyToken,
   verifyCsrfToken,
   getAssetFileList
 );
