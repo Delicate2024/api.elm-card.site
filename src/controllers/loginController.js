@@ -31,7 +31,7 @@ const login = (req, res) => {
     });
 
     // 返回 CSRF 和伪 token
-    return res.json({ success: true, message: '登录成功', csrfToken, redirectToken });
+    return res.json({ success: true, message: '登录成功', csrfToken, redirectToken});
   }
 
   // 确保返回正确的 401 错误，并且错误信息格式正确
