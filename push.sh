@@ -28,18 +28,18 @@ LATEST_TAG=$(git ls-remote --tags "$GITEA_REMOTE" | \
 
 echo "Latest tag on remote is: $LATEST_TAG"
 
-# 将版本号转为整数（*100）以避免浮点问题
+# 将版本号转为整数（*1000）以避免浮点问题
 if [[ -z "$LATEST_TAG" ]]; then
-    echo "No existing tag found, starting from 0.01"
+    echo "No existing tag found, starting from 0.001"
     LATEST_INT=0
 else
-    LATEST_INT=$(echo "$LATEST_TAG" | awk -F. '{printf("%d", $1*100 + $2)}')
+    LATEST_INT=$(echo "$LATEST_TAG" | awk -F. '{printf("%d", $1*1000 + $2*10)}')
     echo "Converted latest tag to integer: $LATEST_INT"
 fi
 
 # 计算新 tag 的整数形式并格式化为 X.XX
 NEW_INT=$((LATEST_INT + 1))
-NEW_TAG=$(printf "%d.%02d" $((NEW_INT / 100)) $((NEW_INT % 100)))
+NEW_TAG=$(printf "%d.%03d" $((NEW_INT / 1000)) $((NEW_INT % 1000)))
 
 echo "Calculated new tag: $NEW_TAG"
 
