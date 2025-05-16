@@ -33,7 +33,7 @@ if [[ -z "$LATEST_TAG" ]]; then
     echo "No existing tag found, starting from 0.001"
     LATEST_INT=0
 else
-    LATEST_INT=$(echo "$LATEST_TAG" | awk -F. '{printf("%d", $1*1000 + $2*10)}')
+    LATEST_INT=$(echo "$LATEST_TAG" | awk -F. '{printf("%d", $1*1000 + $2)}')
     echo "Converted latest tag to integer: $LATEST_INT"
 fi
 
