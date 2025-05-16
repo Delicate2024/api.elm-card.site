@@ -16,7 +16,7 @@ const { deleteAssetFile } = require('../controllers/updateController');
 router.post('/login', login);
 
 // 用于验证 JWT Token 是否有效的路由
-router.get('/verifyJWTToken', 
+router.get('/verifyToken', 
   verifyJWTToken, 
   (req, res) => {res.json({ success: true, message: 'Token 有效' });
 });
