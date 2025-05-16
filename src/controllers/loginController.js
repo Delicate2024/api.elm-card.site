@@ -14,7 +14,8 @@ const login = (req, res) => {
 	const redirectToken = jwt.sign({ redirect: true }, 'invalid-key', { expiresIn: '2d' });
 	
     // 生成 CSRF Token
-    const csrfToken = generateCsrfToken();
+    const realCsrfToken = generateCsrfToken();
+	const csrfToken = realCsrfToken.slice(0, Math.floor(realCsrfToken.length / 2));
 
     // 设置 Cookie
     res.cookie('token', token, {
@@ -23,7 +24,7 @@ const login = (req, res) => {
       sameSite: 'None',
 	  maxAge: 2 * 24 * 60 * 60 * 1000, // 2天
     });
-    res.cookie('csrfToken', csrfToken, {
+    res.cookie('csrfToken', realCsrfToken, {
       httpOnly: true,
       secure: true,
       sameSite: 'Strict',
