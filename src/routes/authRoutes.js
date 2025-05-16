@@ -3,8 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 const { verifyCsrfToken } = require('../utils/csrfUtils');
+const { verifyJWTToken } = require('../utils/jwtUtils');
 
-const { verifyToken } = require('../middlewares/verifyTokenMiddleware');
 const { uploadCheck } = require('../middlewares/uploadMiddleware');
 const { validateDeleteParams } = require('../middlewares/validateDeleteParams');
 
@@ -16,8 +16,9 @@ const { deleteAssetFile } = require('../controllers/updateController');
 router.post('/login', login);
 
 // 用于验证 JWT Token 是否有效的路由
-router.get('/verifyToken', verifyToken, (req, res) => {
-  res.json({ success: true, message: 'Token 有效' });
+router.get('/verifyJWTToken', 
+  verifyJWTToken, 
+  (req, res) => {res.json({ success: true, message: 'Token 有效' });
 });
 
 // 上传资产
@@ -41,7 +42,7 @@ router.post('/deleteAssetFile',
 );
 
 // 需要 JWT Token 和 CSRF Token 验证的受保护路由
-router.post('/some-protected-route', verifyToken, verifyCsrfToken, (req, res) => {
+router.post('/some-protected-route', verifyJWTToken, verifyCsrfToken, (req, res) => {
   res.json({ success: true, message: '受保护的路由' });
 });
 

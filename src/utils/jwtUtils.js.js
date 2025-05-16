@@ -1,8 +1,8 @@
-// src/middlewares/verifyTokenMiddleware.js
+// src/utils/jwtUtils.js
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = require('../config/config');
 
-const verifyToken = (req, res, next) => {
+const verifyJWTToken = (req, res, next) => {
   const token = req.cookies.token;
 
   if (!token) {
@@ -20,5 +20,5 @@ const verifyToken = (req, res, next) => {
 };
 
 module.exports = {
-  verifyToken,
+  verifyJWTToken,
 };
