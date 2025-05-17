@@ -16,10 +16,15 @@ const getAssetFileList = (req, res) => {
         const subDir = path.join(baseUploadDir, dirent.name);
         const files = fs.readdirSync(subDir)
           .filter(name => fs.statSync(path.join(subDir, name)).isFile())
-          .map(name => ({
-            name,
-            type: dirent.name, 
-          }));
+          .map(name => {
+            const filePath = path.join(subDir, name);
+            const stats = fs.statSync(filePath);
+            return {
+              name,
+              type: dirent.name,
+              size: stats.size, // 文件大小（Byte）
+            };
+          });
 
         result[dirent.name] = files;
       }
